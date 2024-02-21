@@ -2,7 +2,7 @@ import streamlit as st
 import random
 import string
 
-def generate_password(length, uppercase, special_chars, digits):
+def generate_password(length, uppercase, special_chars, digits, text_to_include):
     characters = string.ascii_lowercase
     if uppercase:
         characters += string.ascii_uppercase
@@ -11,7 +11,9 @@ def generate_password(length, uppercase, special_chars, digits):
     if digits:
         characters += string.digits
     
-    password = ''.join(random.choice(characters) for _ in range(length))
+    password = ''.join(random.choice(characters) for _ in range(length - len(text_to_include)))
+    password += text_to_include
+    password = ''.join(random.sample(password, len(password)))  # Shuffle the password
     return password
 
 st.title("Generate Password")
